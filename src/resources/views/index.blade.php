@@ -24,41 +24,19 @@
 
     <div class="content">
         <div class="add__product">
-            <a href="/">
+            <a href="/products/register">
                 <button>+ 商品を追加</button>
             </a>
         </div>
         <div class="card-grid">
+            @foreach ($products as $product)
             <div class="card">
-                <img src="kiwi.jpg" alt="キウイ">
-                <h3>キウイ</h3>
-                <p>&yen;800</p>
+                <!-- 商品画像 -->
+                <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}">
+                <h3>{{ $product->name }}</h3>
+                <p>&yen;{{ number_format($product->price) }}</p>
             </div>
-            <div class="card">
-                <img src="strawberry.jpg" alt="ストロベリー">
-                <h3>ストロベリー</h3>
-                <p>&yen;1200</p>
-            </div>
-            <div class="card">
-                <img src="orange.jpg" alt="オレンジ">
-                <h3>オレンジ</h3>
-                <p>&yen;850</p>
-            </div>
-            <div class="card">
-                <img src="watermelon.jpg" alt="スイカ">
-                <h3>スイカ</h3>
-                <p>&yen;700</p>
-            </div>
-            <div class="card">
-                <img src="peach.jpg" alt="ピーチ">
-                <h3>ピーチ</h3>
-                <p>&yen;1000</p>
-            </div>
-            <div class="card">
-                <img src="grape.jpg" alt="シャインマスカット">
-                <h3>シャインマスカット</h3>
-                <p>&yen;1400</p>
-            </div>
+            @endforeach
         </div>
         <div class="pagination">
             <span class="page-number">&lt;</span>
