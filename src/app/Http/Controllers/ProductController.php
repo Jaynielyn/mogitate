@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\StoreProductRequest;
 use App\Models\Product;
+use App\Models\Season;
 
 class ProductController extends Controller
 {
@@ -16,24 +18,25 @@ class ProductController extends Controller
 
     public function create()
     {
-        return view('products__register');
+        $seasons = Season::all();
+
+        return view('product_register', compact('seasons'));
     }
 
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
-        $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'price' => 'required|integer',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
-            'description' => 'required|string',
-        ]);
+        $validatedData = $request->validated();
 
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images', 'public');
             $validatedData['image'] = $imagePath;
         }
 
-        Product::create($validatedData);
+        $product = Product::create($validatedData);
+
+        if ($request->has('seasons')) {
+            $product->seasons()->attach($request->seasons);
+        }
 
         return redirect()->route('index')->with('success', '商品を登録しました！');
     }

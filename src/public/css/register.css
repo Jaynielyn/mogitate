@@ -39,6 +39,7 @@
 .form__label {
     margin-bottom: 5px;
     font-size: 16px;
+    color: #4B4B4B;
 }
 
 input[type="text"],
@@ -134,4 +135,23 @@ textarea {
     padding: 5px;
     width: 50%;
     height: auto;
+}
+
+.optional {
+    color: #FD0707;
+    margin-left: 5px;
+}
+
+.text-danger {
+    color: #FD0707;
+    font-size: 14px;
+    margin-top: 10px;
+}
+
+.required {
+    background-color: #FD0707;
+    color: white;
+    font-size: 12px;
+    padding: 3px;
+    margin-left: 5px;
 }
