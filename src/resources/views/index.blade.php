@@ -30,12 +30,12 @@
         </div>
         <div class="card-grid">
             @foreach ($products as $product)
-            <div class="card">
+            <a href="{{ route('products.show', $product->id) }}" class="card" style="text-decoration: none; color: inherit;">
                 <!-- 商品画像 -->
-                <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}">
+                <img src="{{ Storage::url($product->image) }}" alt="{{ $product->name }}" style="width: 100%; height: auto;">
                 <h3>{{ $product->name }}</h3>
                 <p>&yen;{{ number_format($product->price) }}</p>
-            </div>
+            </a>
             @endforeach
         </div>
         <div class="pagination">

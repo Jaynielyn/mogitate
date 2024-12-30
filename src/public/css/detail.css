@@ -1,0 +1,155 @@
+/* 全体レイアウト */
+.detail__page {
+    margin: 20px auto;
+    max-width: 900px;
+    padding: 20px;
+    font-family: 'Arial', sans-serif;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+}
+
+/* パンくずリスト */
+.breadcrumb {
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #4b4b4b;
+}
+
+.breadcrumb a {
+    color: #0085FF;
+    text-decoration: none;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}
+
+/* 商品詳細レイアウト */
+.product__detail {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.product__image {
+    flex: 1;
+    max-width: 50%;
+    text-align: center;
+}
+
+.product__image img {
+    max-width: 100%;
+    height: auto;
+}
+
+/* 商品情報エリア */
+.product__info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* 商品説明エリア */
+.product__description {
+    margin-top: 20px;
+}
+
+.form__group {
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+    color: #4b4b4b;
+    gap: 5px;
+}
+
+.form__group label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #4b4b4b;
+}
+
+.form__control {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+textarea.form__control {
+    resize: none;
+    height: 100px;
+}
+
+/* ボタンエリア */
+.form__actions {
+    display: flex;
+    /* 横並びにする */
+    justify-content: center;
+    /* 親要素内で中央揃え */
+    align-items: center;
+    /* 縦方向の中央揃え */
+    gap: 10px;
+    /* ボタン間の余白 */
+    margin-top: 20px;
+    /* 上部に余白 */
+    text-align: center;
+    /* センタリング（念のため） */
+}
+
+.btn {
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    border-radius: 4px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s;
+}
+
+.btn__warning {
+    background-color: #ffc107;
+    color: #fff;
+    border: none;
+}
+
+.btn__warning:hover {
+    background-color: #e0a800;
+    transform: scale(1.05);
+}
+
+.btn__secondary {
+    background-color: #6c757d;
+    color: #fff;
+    border: none;
+}
+
+.btn__secondary:hover {
+    background-color: #5a6268;
+    transform: scale(1.05);
+}
+
+form button img {
+    transition: transform 0.2s;
+}
+
+form button img:hover {
+    transform: scale(1.1);
+}
+
+input[type="file"] {
+    display: inline-block;
+    background-color: transparent;
+    border: none;
+    font-size: 16px;
+    color: #007bff;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+input[type="file"]:hover {
+    text-decoration: none;
+}

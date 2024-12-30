@@ -14,7 +14,9 @@
 
 <body>
     <header>
-        <h1>mogitate</h1>
+        <a href="/">
+            <h1>mogitate</h1>
+        </a>
     </header>
 
     <main>

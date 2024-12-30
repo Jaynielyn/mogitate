@@ -25,8 +25,10 @@ class StoreProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
+            'price' => 'required|numeric|between:0,10000',
             'image' => 'nullable',
             'seasons' => 'nullable',
+            'description' => 'required|string|max:120',
         ];
     }
 

@@ -41,13 +41,21 @@
         <!-- 季節 -->
         <div class="form__group">
             <label class="form__label">季節 <span class="required">必須</span> <span class="optional">複数選択可</span></label>
-            <div class="season__checkboxes">
+            <div class="season__checkboxes" style="display: flex; gap: 10px;">
                 @foreach($seasons as $season)
-                <label><input type="checkbox" name="seasons[]" value="{{ $season->id }}"> {{ $season->name }}</label>
+                <label style="display: flex; align-items: center; gap: 5px; cursor: pointer;" onclick="toggleCheckbox(this)">
+                    <!-- チェックボックス -->
+                    <input type="checkbox" name="seasons[]" value="{{ $season->id }}" style="display: none;">
+                    <!-- 状態を示すアイコン -->
+                    <img src="{{ asset('fruits-img/circle-regular.svg') }}"
+                        alt="{{ $season->name }}"
+                        style="width: 20px; height: 20px;">
+                    <span>{{ $season->name }}</span>
+                </label>
                 @endforeach
             </div>
             @error('seasons')
-            <p class="error">{{ $message }}</p>
+            <p class="text-danger">{{ $message }}</p>
             @enderror
         </div>
 
@@ -84,6 +92,29 @@
         } else {
             preview.style.display = 'none'; // ファイルが選択されていない場合は非表示
         }
+    });
+
+    function toggleCheckbox(label) {
+        const checkbox = label.querySelector('input[type="checkbox"]');
+        const icon = label.querySelector('img');
+
+        // チェック状態をトグル
+        checkbox.checked = !checkbox.checked;
+
+        // アイコン画像を切り替え
+        icon.src = checkbox.checked ?
+            "{{ asset('fruits-img/circle-check-solid.svg') }}" // チェック状態
+            :
+            "{{ asset('fruits-img/circle-regular.svg') }}"; // 未チェック状態
+    }
+
+    // ページ読み込み時に初期アイコン設定
+    document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+        const icon = checkbox.nextElementSibling; // アイコンを取得
+        icon.src = checkbox.checked ?
+            "{{ asset('fruits-img/circle-check-solid.svg') }}" // チェック済み
+            :
+            "{{ asset('fruits-img/circle-regular.svg') }}"; // 未チェック
     });
 </script>
 @endsection
