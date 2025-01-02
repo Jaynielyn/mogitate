@@ -10,9 +10,24 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::all();
+        $query = Product::query();
+
+        // 検索
+        if ($request->filled('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+
+        // 価格で並べ替え
+        if ($request->has('sort') && in_array($request->sort, ['asc', 'desc'])) {
+            $query->orderBy('price', $request->sort);
+        }
+
+        // データを取得
+        $products = $query->get();
+
+        $products = $query->paginate(6);
 
         return view('index', compact('products'));
     }
@@ -44,49 +59,41 @@ class ProductController extends Controller
 
     public function show($productId)
     {
-        // 指定された商品を取得
         $product = Product::findOrFail($productId);
-        return view('product_detail', compact('product')); // 詳細ページにデータを渡す
+        return view('product_detail', compact('product'));
     }
 
     public function edit($productId)
     {
-        // 編集対象の商品を取得
         $product = Product::findOrFail($productId);
-        return view('product_edit', compact('product')); // 編集ページ用のビュー
+        return view('product_edit', compact('product'));
     }
 
     public function update(Request $request, $productId)
     {
-        // 更新対象の商品を取得
         $product = Product::findOrFail($productId);
 
-        // バリデーションルール
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric',
             'description' => 'nullable|string',
-            'season' => 'nullable|array', // 季節は配列で受け取る
-            'season.*' => 'in:春,夏,秋,冬', // 配列内の値を制限
+            'season' => 'nullable|array',
+            'season.*' => 'in:春,夏,秋,冬',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
         if ($request->hasFile('image')) {
-            // 古い画像を削除
             if ($product->image) {
                 Storage::disk('public')->delete($product->image);
             }
 
-            // 新しい画像を保存
             $validatedData['image'] = $request->file('image')->store('images', 'public');
         }
 
-        // 季節データを処理（多対多リレーション）
         if ($request->has('season')) {
-            $product->seasons()->sync($request->season); // 中間テーブルを更新
+            $product->seasons()->sync($request->season);
         }
 
-        // 商品データを更新
         $product->update($validatedData);
 
         return redirect()->route('products.show', $productId)->with('success', '商品情報を更新しました！');
@@ -94,15 +101,12 @@ class ProductController extends Controller
 
     public function delete($id)
     {
-        // 削除対象の商品を取得
         $product = Product::findOrFail($id);
 
-        // ストレージから画像を削除
         if ($product->image) {
             Storage::disk('public')->delete($product->image);
         }
 
-        // 商品を削除
         $product->delete();
 
         return redirect()->route('index')->with('success', '商品を削除しました！');
